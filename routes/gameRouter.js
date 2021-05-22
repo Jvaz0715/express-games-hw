@@ -115,7 +115,15 @@ router.put("/update-game/:id", (req, res) => {
 
 // h. Make DELETE "/delete-game" route that takes in the id in the params. Once found, delete the game. If there's no game with the id, respond with "game not found, cannot delete")
 
-
+router.delete("/delete-game/:id", (req, res) => {
+    let indexOfFound = games.findIndex(game => game.id === req.params.id);
+    if (indexOfFound === -1) {
+        res.json({ data: "game not found, cannot delete" });
+    } else {
+        games.splice(indexOfFound, 1);
+        res.json({ games });
+    };
+})
 
 
 module.exports = router;
