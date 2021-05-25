@@ -46,8 +46,8 @@ router.get("/get-game-by-id/:id", (req, res) => {
 router.post("/create-new-game", (req, res) => {
     let newGame = {
         id: uuidv4(),
-        game: req.body.newGame,
-        description: req.body.newDescription,
+        game: req.body.game,
+        description: req.body.description,
     };
 
     let gameFound;
@@ -96,8 +96,8 @@ router.put("/update-game/:id", (req, res) => {
     } else {
         // Note: we need to see if the description or game name already exists
         // so lets declare a gameNameExistsIndex and a gameDescExistsIndex and use findIndex to see if there are indices that shouldnt be overridden
-        let gameNameExistsIndex = games.findIndex(game => game.game === req.body.updateGame);
-        let gameDescExistsIndex = games.findIndex(game => game.description === req.body.updateDescription);
+        let gameNameExistsIndex = games.findIndex(game => game.game === req.body.game);
+        let gameDescExistsIndex = games.findIndex(game => game.description === req.body.description);
 
         // now if either variable above is greater than -1, it means it exists and we cannot apply this to update the game
         if(gameNameExistsIndex > -1 || gameDescExistsIndex > -1){
@@ -105,9 +105,11 @@ router.put("/update-game/:id", (req, res) => {
         }
         if (gameNameExistsIndex === -1) {
             foundGame.game = req.body.updateGame;
+            res.json({ data: games[gameNameExistsIndex] });
         }
         if (gameDescExistsIndex === -1) {
             foundGame.description = req.body.updateDescription;
+            res.json({ data: games[gameDescExistsIndex] });
         };
     };
 
