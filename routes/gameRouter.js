@@ -104,13 +104,12 @@ router.put("/update-game/:id", (req, res) => {
             res.json({ data: "One or more updates already exists" })
         }
         if (gameNameExistsIndex === -1) {
-            foundGame.game = req.body.updateGame;
-            res.json({ data: games[gameNameExistsIndex] });
+            foundGame.game = req.body.game;
         }
         if (gameDescExistsIndex === -1) {
-            foundGame.description = req.body.updateDescription;
-            res.json({ data: games[gameDescExistsIndex] });
+            foundGame.description = req.body.description;
         };
+        res.json({foundGame: foundGame})
     };
 
 });
